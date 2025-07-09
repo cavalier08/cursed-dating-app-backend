@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'corsheaders',
+    'mongoengine',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -82,7 +84,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     },
     'mongodb': {
-        'NAME'
+        'ENGINE': '',
+        'NAME': 'users',
     }
 }
 

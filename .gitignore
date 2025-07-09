@@ -1,0 +1,2 @@
+# Ignore cached / compiled python programs
+/__pycache__
