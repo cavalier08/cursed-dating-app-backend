@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,8 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'cursed_dating_app_be.urls'
@@ -85,13 +84,13 @@ DATABASES = {
     },
     'mongodb': {
         'ENGINE': '',
-        'NAME': 'users',
+        'NAME': 'database',
     }
 }
 
 connect(
-    db='users',
-    host='mongodb+srv://chantal:ilovecxc123@cursed-dating-app.teoswcu.mongodb.net/users?retryWrites=true&w=majority'
+    db='database',
+    host='mongodb+srv://chantal:ilovecxc123@cursed-dating-app.teoswcu.mongodb.net'
 )
 
 # Password validation
