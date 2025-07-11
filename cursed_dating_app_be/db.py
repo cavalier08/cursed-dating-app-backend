@@ -1,14 +1,19 @@
 # db.py
 # Contains API endpoints to work with database
 
-from mongoengine import Document, StringField
+from mongoengine import Document, StringField, ListField
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import random
 
 class User(Document):
     name = StringField(required=True)
     username = StringField(required=True)
     password = StringField(required=True)
+
+class Ranking(Document):
+    username = StringField(required=True)
+    rankings = ListField(required=True)
 
 
 @api_view(['POST'])
@@ -42,3 +47,45 @@ def login(request):   # /login/
             "error": "Incorrect password."
         })
     return Response({"success": True})  # successful login
+
+
+@api_view(['POST'])
+def getUser(request):   # /getuser/
+    # Get the given user and send their info
+    user = list(User.objects(username = request.data['username']))[0]
+    return Response({
+        "name": user.name,
+        "username": user.username
+    })
+
+
+@api_view(['POST'])
+def randomUser(request):   # /random/
+    if (request.data['username'] == ''):
+        return Response({
+            "success": False,
+            "error": "No username given."
+        })
+    # Get all users except the given user
+    user = random.choice(list(User.objects(username__ne=request.data['username'])))
+    # Send a random user
+    return Response({
+        "success": True,
+        "name": user.name,
+        "username": user.username
+    })
+
+
+@api_view(['POST'])
+def rank(request):   # /rank/
+    # Get users whose username matches the requested username
+    possibleUser = list(User.objects(username = request.data['thisUsername']))
+    if (len(possibleUser) == 0):  # no user with requested username
+        return Response({
+            "success": False,
+            "error": "Username " + request.data['username'] + " not found."
+        })
+    currentUser = possibleUser[0]
+    rankingList = list(Ranking.objects(username = currentUser.username))[0]
+    # Save the ranking to the database - TO BE IMPLEMENTED
+    return Response({"success": False})  # (currently unsuccessful) rank

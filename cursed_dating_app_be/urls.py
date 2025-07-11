@@ -18,10 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import example_endpoint
-from .db import signup, login
+from .db import signup, login, getUser, randomUser, rank
 
 urlpatterns = [
     path('admin/', example_endpoint),
     path('signup/', signup),
     path('login/', login),
+    path('getuser/', getUser),
+    path('random/', randomUser),
+    path('rank/', rank),
 ]
