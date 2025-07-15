@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import certifi
 from pathlib import Path
 from mongoengine import connect
 
@@ -90,7 +91,9 @@ DATABASES = {
 
 connect(
     db='database',
-    host='mongodb+srv://chantal:ilovecxc123@cursed-dating-app.teoswcu.mongodb.net'
+    host='mongodb+srv://chantal:ilovecxc123@cursed-dating-app.teoswcu.mongodb.net',
+     tlsCAFile=certifi.where()
+   # tlsAllowInvalidCertificates=True
 )
 
 # Password validation
