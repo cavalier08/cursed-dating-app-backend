@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import certifi
 from pathlib import Path
 from mongoengine import connect
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+base_url = os.getenv('FRONT_END_URL')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,10 +45,55 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+
     'corsheaders',
     'mongoengine',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken',
+    'oauth2_provider',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google'
+
+   
+
 ]
+
+# allauth settings:
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    }
+}
+
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'oauth2_provider.backends.OAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend'
+
+
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope'},
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -53,6 +104,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+
 ]
 
 ROOT_URLCONF = 'cursed_dating_app_be.urls'
@@ -92,8 +146,7 @@ DATABASES = {
 connect(
     db='database',
     host='mongodb+srv://chantal:ilovecxc123@cursed-dating-app.teoswcu.mongodb.net',
-     tlsCAFile=certifi.where()
-   # tlsAllowInvalidCertificates=True
+    tlsCAFile=certifi.where()
 )
 
 # Password validation
