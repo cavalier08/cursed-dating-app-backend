@@ -1,3 +1,4 @@
 # Ignore cached / compiled python programs
 /cursed_dating_app_be/__pycache__
-.env
+
+.env* 
