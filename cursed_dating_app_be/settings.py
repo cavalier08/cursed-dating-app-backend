@@ -19,6 +19,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 base_url = os.getenv('FRONT_END_URL')
+client_id = os.getenv('CLIENT_ID')
+secret = os.getenv('SECRET_KEY')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -67,6 +70,10 @@ INSTALLED_APPS = [
 # allauth settings:
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': client_id,
+            'secret': secret,
+        },
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
     }
@@ -74,6 +81,15 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 SITE_ID = 1
+
+# Authentication
+LOGIN_REDIRECT_URL = 'http://localhost:3000/'  # Your frontend URL
+LOGOUT_REDIRECT_URL = 'http://localhost:3000/'
+
+# Allauth specific
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'  # Change to 'https' in production
+SOCIALACCOUNT_LOGIN_ON_GET = True  # Skip the confirmation page
+SOCIALACCOUNT_STORE_TOKENS = True
 
 AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -90,6 +106,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
+
+
 
 OAUTH2_PROVIDER = {
     'SCOPES': {'read': 'Read scope', 'write': 'Write scope'},
