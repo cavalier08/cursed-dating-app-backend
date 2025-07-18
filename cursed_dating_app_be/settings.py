@@ -90,6 +90,8 @@ LOGOUT_REDIRECT_URL = 'http://localhost:3000/'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'  # Change to 'https' in production
 SOCIALACCOUNT_LOGIN_ON_GET = True  # Skip the confirmation page
 SOCIALACCOUNT_STORE_TOKENS = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_LOGIN_ON_GET = True  # Skip intermediate pages
 
 AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
