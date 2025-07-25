@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import example_endpoint
+from .views import get_session
 from .db import signup, login, getUser, randomUser, rank
 from oauth2_provider import urls as oauth2_urls
 
@@ -28,5 +28,6 @@ urlpatterns = [
     path('getuser/', getUser),
     path('random/', randomUser),
     path('rank/', rank),
-    path('accounts/', include('allauth.urls'))
+    path('accounts/', include('allauth.urls')),
+    path('api/get-session', get_session, name='get_session')
 ]
