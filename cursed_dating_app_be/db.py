@@ -5,6 +5,8 @@ from mongoengine import Document, StringField, ListField
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import random
+from django.middleware.csrf import get_token
+
 
 class User(Document):
     name = StringField(required=True)
@@ -46,7 +48,14 @@ def login(request):   # /login/
             "success": False,
             "error": "Incorrect password."
         })
-    return Response({"success": True})  # successful login
+    return Response({
+        "success": True,
+        'token': request.session.session_key,
+       # 'csrf_token': get_token(request),
+        'user': {
+            #'email': request.user.email,
+            'username': request.user.username
+        }})  # successful login chantal also added some other spicy user info
 
 
 @api_view(['POST'])

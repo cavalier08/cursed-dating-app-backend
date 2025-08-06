@@ -20,6 +20,7 @@ from django.urls import path, include
 from .views import get_session
 from .db import signup, login, getUser, randomUser, rank
 from oauth2_provider import urls as oauth2_urls
+from allauth.account.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('random/', randomUser),
     path('rank/', rank),
     path('accounts/', include('allauth.urls')),
-    path('api/get-session', get_session, name='get_session')
+    path('api/get-session', get_session, name='get_session'),
+    path('accounts/logout', LogoutView.as_view(), name='account_logout'),
 ]

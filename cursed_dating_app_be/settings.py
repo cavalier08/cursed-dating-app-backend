@@ -83,7 +83,7 @@ SOCIALACCOUNT_PROVIDERS = {
 SITE_ID = 1
 
 # Authentication
-LOGIN_REDIRECT_URL = 'http://localhost:3000/swiping/'  # Your frontend URL
+LOGIN_REDIRECT_URL = 'http://localhost:3000/matches/'  # Your frontend URL
 LOGOUT_REDIRECT_URL = 'http://localhost:3000/'
 
 # Allauth specific
